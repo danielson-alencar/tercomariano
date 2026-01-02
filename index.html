@@ -78,12 +78,10 @@
 
         /* --- ÁREA DO TERÇO (SVG) --- */
         .rosary-section {
-            /* AJUSTE MOBILE: Reduzido de 1.4 para 0.9 para dar mais espaço ao texto */
-            flex: 0.9; 
-            min-height: 35%; /* Altura mínima ligeiramente reduzida */
+            flex: 1.2; min-height: 35%;
             display: flex; align-items: center; justify-content: center;
             position: relative;
-            padding: calc(10px + var(--safe-area-top)) 10px 0px 10px; /* Padding reduzido */
+            padding: calc(10px + var(--safe-area-top)) 10px 0px 10px;
         }
         .rosary-svg-container {
             width: 100%; height: 100%;
@@ -108,7 +106,6 @@
             cursor: pointer; transform-box: fill-box; transform-origin: center;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        /* Cores aplicadas via SVG definitions, fallback classes abaixo */
         .bead.small { fill: url(#grad-gem-blue); }
         .bead.large { fill: url(#grad-gem-red); }
         .cross, .medal-base { fill: url(#grad-metal-gold-inactive); }
@@ -125,9 +122,7 @@
 
         /* --- PAINEL DE TEXTO --- */
         .text-section {
-            /* AJUSTE MOBILE: Flex 1 assume o espaço restante, ficando maior agora */
-            flex: 1; 
-            display: flex; flex-direction: column;
+            flex: 1; display: flex; flex-direction: column;
             background-color: var(--panel-bg);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-radius: 30px 30px 0 0; padding: 25px 30px;
@@ -136,14 +131,33 @@
             padding-bottom: calc(70px + var(--safe-area-bottom));
             transition: background-color 0.5s ease;
         }
+
+        /* --- ÁREA DE PROGRESSO --- */
+        .progress-area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
         .progress-bar-container {
-            width: 100%; height: 4px; background: var(--border-color);
-            border-radius: 2px; margin-bottom: 15px; overflow: hidden;
+            flex: 1; /* Ocupa o espaço restante */
+            height: 4px; background: var(--border-color);
+            border-radius: 2px; overflow: hidden;
         }
         .progress-fill {
             height: 100%; background: var(--text-gold); width: 0%;
             transition: width 0.5s ease; box-shadow: 0 0 10px var(--text-gold);
         }
+        .progress-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--text-gold);
+            font-weight: 700;
+            min-width: 40px;
+            text-align: right;
+        }
+
         .header-info { text-align: center; flex-shrink: 0; margin-bottom: 15px; }
         .date-badge {
             font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600;
@@ -191,8 +205,7 @@
                 overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
                 background: var(--bg-color); border: 1px solid var(--border-color); max-width: 1100px;
             }
-            /* AJUSTE DESKTOP: Terço mais estreito (0.8), Texto mais largo (1.2) */
-            .rosary-section { flex: 0.8; padding: 30px; } 
+            .rosary-section { flex: 1.2; padding: 30px; } 
             .text-section { flex: 1.2; border-radius: 0; border-left: 1px solid var(--border-color); padding: 40px; }
             .theme-toggle-btn { top: 30px; right: 30px; }
         }
@@ -234,9 +247,13 @@
         </section>
 
         <section class="text-section">
-            <div class="progress-bar-container">
-                <div id="progress-fill" class="progress-fill"></div>
+            <div class="progress-area">
+                <div class="progress-bar-container">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <span id="progress-text" class="progress-text">0%</span>
             </div>
+
             <div class="header-info">
                 <div id="date-display" class="date-badge">...</div>
                 <h2 id="mystery-display" class="mystery-title">Carregando...</h2>
@@ -254,7 +271,6 @@
     <script>
         /**
          * APLICAÇÃO TERÇO DIGITAL
-         * Lógica encapsulada para evitar poluição global
          */
         const RosaryApp = (() => {
             'use strict';
@@ -292,6 +308,7 @@
                 text: document.getElementById('text-display'),
                 scroll: document.getElementById('prayer-scroll-area'),
                 progress: document.getElementById('progress-fill'),
+                progressText: document.getElementById('progress-text'), // Elemento da porcentagem
                 btn: document.getElementById('btn-next'),
                 themeBtn: document.getElementById('theme-toggle')
             };
@@ -509,6 +526,7 @@
             function restartRosary() {
                 currentStep = -1;
                 els.progress.style.width = "0%";
+                els.progressText.innerText = "0%";
                 document.querySelectorAll('.active, .done').forEach(e => e.classList.remove('active', 'done'));
                 els.text.innerText = "Toque no botão abaixo para iniciar.";
                 els.btn.innerText = "Iniciar";
@@ -519,9 +537,10 @@
             function updateUI() {
                 if(currentStep < 0) return;
 
-                // Barra de Progresso
+                // Barra de Progresso e Porcentagem
                 const progressPct = ((currentStep + 1) / rosaryStructure.length) * 100;
                 els.progress.style.width = `${progressPct}%`;
+                els.progressText.innerText = `${Math.round(progressPct)}%`;
 
                 // Texto e Label com Fade
                 const d = rosaryStructure[currentStep];
