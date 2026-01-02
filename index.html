@@ -3,459 +3,521 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terço Mariano</title>
-    <!-- Adicionando Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Adicionando Favicon -->
-    <link rel="icon" href="https://example.com/favicon.ico" type="image/x-icon">
+    <title>Terço Digital Animado</title>
     <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --line-color: #444;
+            --bead-inactive: #333;
+            --bead-done: #555;
+            /* Cor dourada mais vibrante para o ativo */
+            --bead-active: #ffd700; 
+            --text-color: #eee;
+            --text-muted: #aaa;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
+            align-items: center;
             min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-            flex: 1;
-        }
-
-        h1 {
-            color: #444;
-        }
-
-        #data-atual {
-            font-size: 1.1em;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        #oracoes, #misterios {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .secao {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-left: 5px solid #007bff;
-            border-radius: 4px;
-            transition: background-color 0.3s, border-left-color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .secao:hover {
-            background-color: #e0f0ff;
-            border-left-color: #0056b3;
-        }
-
-        .secao h2 {
             margin: 0;
-            font-size: 1.2em;
-            color: #007bff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .secao .titulo-misterio {
-            color: #d63384;
-        }
-
-        .secao p {
-            margin: 5px 0 0;
-            font-size: 1em;
-            color: #555;
-        }
-
-        .paginacao {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 20px;
-        }
-
-        .paginacao button {
-            padding: 10px 15px;
-            font-size: 1em;
-            color: #007bff;
-            background-color: #fff;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .paginacao button:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .paginacao button.ativo {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .pagina {
-            display: none;
-        }
-
-        .pagina.ativa {
-            display: block;
-        }
-
-        .progresso {
-            margin-top: 20px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            height: 20px;
-            overflow: hidden;
-        }
-
-        .progresso-bar {
-            height: 100%;
-            background-color: #007bff;
-            width: 0;
-            transition: width 0.3s;
-        }
-
-        .progresso-texto {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #555;
-        }
-
-        .checkbox {
-            margin-left: auto;
-            cursor: pointer;
-        }
-
-        footer {
-            text-align: center;
             padding: 20px;
-            background-color: #007bff;
-            color: #fff;
-            margin-top: auto;
+            box-sizing: border-box;
         }
 
-        footer p {
-            margin: 0 0 10px;
-            font-size: 1.2em;
-        }
-
-        footer .social-icons {
+        .main-layout {
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
         }
 
-        footer .social-icons a {
-            color: #fff;
-            font-size: 1.5em;
-            transition: color 0.3s;
-        }
-
-        footer .social-icons a:hover {
-            color: #ffdd57;
-        }
-
-        /* Estilos responsivos para o rodapé */
-        @media (max-width: 768px) {
-            footer p {
-                font-size: 1em;
+        @media (min-width: 768px) {
+            .main-layout {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: center;
             }
-
-            footer .social-icons {
-                flex-direction: column;
-                gap: 10px;
+            .rosary-container {
+                width: 400px; 
+                height: 520px;
             }
-
-            footer .social-icons a {
-                font-size: 1.2em;
+            .text-panel {
+                min-height: 480px;
+                max-height: 520px;
             }
         }
 
-        @media (max-width: 480px) {
-            footer p {
-                font-size: 0.9em;
-            }
+        .rosary-container {
+            position: relative;
+            width: 100%; 
+            max-width: 380px; 
+            aspect-ratio: 3 / 4.5;
+            flex-shrink: 0;
+        }
 
-            footer .social-icons a {
-                font-size: 1em;
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            /* Garante que os filtros de brilho não sejam cortados */
+            padding: 20px; 
+            box-sizing: border-box;
+            margin: -20px;
+        }
+
+        .string-line {
+            fill: none;
+            stroke: var(--line-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        /* --- NOVAS ANIMAÇÕES E ESTILOS DAS CONTAS --- */
+
+        /* Define a animação de pulsação */
+        @keyframes beadPulse {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 6px var(--bead-active));
+            }
+            50% {
+                /* Cresce 20% e aumenta o brilho */
+                transform: scale(1.2);
+                filter: drop-shadow(0 0 15px var(--bead-active));
+            }
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 6px var(--bead-active));
             }
         }
+
+        .bead {
+            fill: var(--bead-inactive);
+            stroke: none;
+            cursor: pointer;
+            /* Transição suave para quando ela deixar de ser ativa */
+            transition: fill 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+            
+            /* Essencial para que a escala do SVG ocorra a partir do centro do elemento */
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .bead.large { r: 9; }
+        .bead.small { r: 6; }
+
+        .cross {
+            fill: var(--bead-inactive);
+            cursor: pointer;
+            transition: fill 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        /* Estados */
+        .bead.done, .cross.done { 
+            fill: var(--bead-done); 
+            /* Garante que volte ao tamanho normal se estava ativa */
+            transform: scale(1); 
+            filter: none;
+        }
+        
+        /* Estado ATIVO com ANIMAÇÃO */
+        .bead.active, .cross.active {
+            fill: var(--bead-active);
+            /* Aplica a animação de pulsação definida acima */
+            animation: beadPulse 2.5s infinite ease-in-out;
+            /* Garante que ela fique sobre as outras se crescer muito */
+            z-index: 10; 
+        }
+        
+        /* Remover os aumentos fixos de raio anteriores, pois a animação de escala cuida disso agora */
+        /* .bead.active.large { r: 11; } */
+        /* .bead.active.small { r: 8; } */
+
+
+        /* --- FIM DAS NOVAS ANIMAÇÕES --- */
+
+
+        .text-panel {
+            background-color: #252525;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 450px; 
+        }
+
+        .date-display {
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .mystery-title {
+            color: var(--bead-active);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .bead-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .prayer-text-container {
+            flex-grow: 1; 
+            overflow-y: auto; 
+            margin-bottom: 20px;
+            padding-right: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #444 #252525;
+        }
+
+        .prayer-text-container::-webkit-scrollbar { width: 8px; }
+        .prayer-text-container::-webkit-scrollbar-track { background: #252525; }
+        .prayer-text-container::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; }
+
+        .prayer-text {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            white-space: pre-wrap; 
+            text-align: left; 
+        }
+
+        .controls {
+            width: 100%;
+        }
+
+        button {
+            background-color: var(--bead-active);
+            border: none;
+            color: #1a1a1a;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50px;
+            width: 100%;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2), 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px) scale(1.02);
+            background-color: #ffe033;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3), 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+        button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Terço Mariano</h1>
-        <p id="data-atual"></p>
-        <div class="progresso">
-            <div class="progresso-bar" id="progresso-bar"></div>
+
+    <div class="main-layout">
+        <div class="rosary-container">
+            <svg id="rosary-svg" viewBox="0 0 300 480">
+                <path id="rosary-string" class="string-line" d="" />
+            </svg>
         </div>
-        <div class="progresso-texto" id="progresso-texto">0% concluído</div>
-        <div id="oracoes"></div>
-        <div id="misterios"></div>
-        <div class="paginacao" id="paginacao"></div>
+
+        <div class="text-panel">
+            <div id="date-display" class="date-display">Carregando Data...</div>
+            <div id="mystery-display" class="mystery-title">Carregando...</div>
+            <div id="label-display" class="bead-label">Início</div>
+            
+            <div class="prayer-text-container">
+                <div id="text-display" class="prayer-text">Clique em Iniciar para começar suas orações.</div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="nextBead()" id="btn-next">Iniciar Terço</button>
+            </div>
+        </div>
     </div>
 
-    <footer>
-        <p>Criado por: Danielson Alencar</p>
-        <div class="social-icons">
-            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-    </footer>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const dataAtualElement = document.getElementById('data-atual');
-            const oracoesElement = document.getElementById('oracoes');
-            const misteriosElement = document.getElementById('misterios');
-            const progressoBar = document.getElementById('progresso-bar');
-            const progressoTexto = document.getElementById('progresso-texto');
-            const paginacaoElement = document.getElementById('paginacao');
+        // --- 1. BANCO DE DADOS DE TEXTOS ---
+        const prayers = {
+            sinalCruz: "Pelo sinal da Santa Cruz, livrai-nos, Deus, nosso Senhor, dos nossos inimigos.\nEm nome do Pai, do Filho e do Espírito Santo. Amém.",
+            oferecimento: "Oferecimento do Terço:\nDivino Jesus, nós Vos oferecemos este terço que vamos rezar, meditando nos mistérios da Vossa Redenção. Concedei-nos, por intercessão da Virgem Maria, Mãe de Deus e nossa Mãe, as virtudes que nos são necessárias para bem rezá-lo e a graça de ganharmos as indulgências desta santa devoção.",
+            credo: "Creio em Deus Pai Todo-Poderoso, Criador do céu e da terra; e em Jesus Cristo, seu único Filho, nosso Senhor; que foi concebido pelo poder do Espírito Santo; nasceu da Virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia; subiu aos céus, está sentado à direita de Deus Pai Todo-Poderoso, de onde há de vir a julgar os vivos e os mortos. Creio no Espírito Santo, na Santa Igreja Católica, na comunhão dos santos, na remissão dos pecados, na ressurreição da carne, na vida eterna. Amém.",
+            paiNosso: "Pai Nosso que estais nos Céus, santificado seja o vosso Nome, venha a nós o vosso Reino, seja feita a vossa vontade assim na terra como no Céu. O pão nosso de cada dia nos dai hoje, perdoai-nos as nossas ofensas assim como nós perdoamos a quem nos tem ofendido, e não nos deixeis cair em tentação, mas livrai-nos do Mal. Amém.",
+            aveMaria: "Ave Maria, cheia de graça, o Senhor é convosco, bendita sois vós entre as mulheres, e bendito é o fruto do vosso ventre, Jesus.\nSanta Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora da nossa morte. Amém.",
+            gloria: "Glória ao Pai e ao Filho e ao Espírito Santo. Como era no princípio, agora e sempre. Amém.\n\n(Jaculatória: Ó meu Jesus, perdoai-nos, livrai-nos do fogo do inferno, levai as almas todas para o céu e socorrei principalmente as que mais precisarem.)",
+            salveRainha: "Salve, Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve! A vós bradamos, os degredados filhos de Eva; a vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois, advogada nossa, esses vossos olhos misericordiosos a nós volvei; e depois deste desterro mostrai-nos Jesus, bendito fruto do vosso ventre, ó clemente, ó piedosa, ó doce sempre Virgem Maria.\n\nV. Rogai por nós, Santa Mãe de Deus.\nR. Para que sejamos dignos das promessas de Cristo. Amém."
+        };
 
-            // Obtém e formata a data atual
-            const data = new Date();
-            const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            const dataFormatada = data.toLocaleDateString('pt-BR', opcoes);
-            dataAtualElement.textContent = `Hoje é ${dataFormatada}`;
-
-            const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-            const hoje = data.getDay();
-            const diaSemana = diasSemana[hoje];
-
-            const misterios = {
-                'Segunda-feira': getMisteriosGozosos(),
-                'Terça-feira': getMisteriosDolorosos(),
-                'Quarta-feira': getMisteriosGloriosos(),
-                'Quinta-feira': getMisteriosLuminosos(),
-                'Quarta-feira': getMisteriosGloriosos(),
-                'Sexta-feira': getMisteriosDolorosos(),
-                'Sábado': getMisteriosGozosos(),
-                'Domingo': getMisteriosGloriosos()
-            };
-
-            const oracoesIniciais = [
-                { titulo: 'Oferecimento', descricao: 'Divino Jesus, nós Vos oferecemos este terço que vamos rezar, meditando nos mistérios da Vossa Redenção. Concedei-nos, por intercessão da Virgem Maria, Mãe de Deus e nossa Mãe, as virtudes que nos são necessárias para bem rezá-lo e a graça de ganharmos as indulgências desta santa devoção.', icone: 'heart' },
-                { titulo: 'Sinal da Cruz', descricao: 'Em nome do Pai, do Filho e do Espírito Santo. Amém.', icone: 'cross' },
-                { titulo: 'Creio', descricao: 'Creio em Deus Pai todo poderoso, criador do céu e da terra...', icone: 'book-bible' },
-                { titulo: 'Pai Nosso', descricao: 'Pai nosso que estais nos céus, santificado seja o Vosso nome...', icone: 'hands-praying' },
-                { titulo: 'Ave Maria (3 vezes)', descricao: 'Ave Maria, cheia de graça, o Senhor é convosco...', icone: 'fa-solid fa-crown' },
-                { titulo: 'Glória', descricao: 'Glória ao Pai, ao Filho e ao Espírito Santo...', icone: 'dove' }
-            ];
-
-            const misteriosDoDia = misterios[diaSemana];
-
-            if (misteriosDoDia) {
-                let paginaAtual = 0;
-                const paginas = [];
-                const totalItens = oracoesIniciais.length + misteriosDoDia.length * 14 + 2; // 14 itens por mistério (1 mistério + 1 Pai Nosso + 10 Ave Marias + 1 Glória + 1 Oração do Ó meu Jesus) + 2 orações finais
-                let itensConcluidos = 0;
-
-                // Função para atualizar o progresso
-                function atualizarProgresso() {
-                    const porcentagem = (itensConcluidos / totalItens) * 100;
-                    progressoBar.style.width = `${porcentagem}%`;
-                    progressoTexto.textContent = `${porcentagem.toFixed(1)}% concluído`;
-                }
-
-                // Cria a primeira página com as orações iniciais
-                const primeiraPagina = document.createElement('div');
-                primeiraPagina.className = 'pagina';
-                oracoesIniciais.forEach(orc => {
-                    const div = document.createElement('div');
-                    div.className = 'secao';
-                    div.innerHTML = `
-                        <h2>
-                            <i class="fas fa-${orc.icone}"></i>
-                            ${orc.titulo}
-                        </h2>
-                        <p>${orc.descricao}</p>
-                        <input type="checkbox" class="checkbox">
-                    `;
-                    div.querySelector('.checkbox').addEventListener('change', function() {
-                        if (this.checked) itensConcluidos++;
-                        else itensConcluidos--;
-                        atualizarProgresso();
-                    });
-                    primeiraPagina.appendChild(div);
-                });
-                misteriosElement.appendChild(primeiraPagina);
-                paginas.push(primeiraPagina);
-
-                // Cria as páginas para cada mistério
-                misteriosDoDia.forEach(misterio => {
-                    const div = document.createElement('div');
-                    div.className = 'pagina';
-                    div.innerHTML = `
-                        <div class="secao">
-                            <h2 class="titulo-misterio">
-                                <i class="fas fa-pray"></i>
-                                ${misterio.titulo}
-                            </h2>
-                            <p>${misterio.descricao}</p>
-                            <input type="checkbox" class="checkbox">
-                        </div>
-                        <div class="secao">
-                            <h2>
-                                <i class="fas fa-hands-praying"></i>
-                                Pai Nosso
-                            </h2>
-                            <p>Pai nosso que estais nos céus, santificado seja o Vosso nome...</p>
-                            <input type="checkbox" class="checkbox">
-                        </div>
-                        ${Array.from({ length: 10 }, (_, i) => `
-                            <div class="secao">
-                                <h2>
-                                    <i class="fas fa-solid fa-crown"></i>
-                                    Ave Maria ${i + 1}
-                                </h2>
-                                <p>Ave Maria, cheia de graça, o Senhor é convosco...</p>
-                                <input type="checkbox" class="checkbox">
-                            </div>
-                        `).join('')}
-                        <div class="secao">
-                            <h2>
-                                <i class="fas fa-dove"></i>
-                                Glória
-                            </h2>
-                            <p>Glória ao Pai, ao Filho e ao Espírito Santo...</p>
-                            <input type="checkbox" class="checkbox">
-                        </div>
-                        <div class="secao">
-                            <h2>
-                                <i class="fas fa-pray"></i>
-                                Ó meu Jesus
-                            </h2>
-                            <p>Ó meu Jesus, perdoai-nos, livrai-nos do fogo do inferno, levai as almas todas para o céu e socorrei principalmente as que mais precisarem.</p>
-                            <input type="checkbox" class="checkbox">
-                        </div>
-                    `;
-                    div.querySelectorAll('.checkbox').forEach(checkbox => {
-                        checkbox.addEventListener('change', function() {
-                            if (this.checked) itensConcluidos++;
-                            else itensConcluidos--;
-                            atualizarProgresso();
-                        });
-                    });
-                    misteriosElement.appendChild(div);
-                    paginas.push(div);
-                });
-
-                // Cria a última página com as orações finais
-                const ultimaPagina = document.createElement('div');
-                ultimaPagina.className = 'pagina';
-                ultimaPagina.innerHTML = `
-                    <div class="secao">
-                        <h2>
-                            <i class="fas fa-hands-praying"></i>
-                            Infinitas Graças
-                        </h2>
-                        <p>Infinitas graças vos damos, Soberana Rainha...</p>
-                        <input type="checkbox" class="checkbox">
-                    </div>
-                    <div class="secao">
-                        <h2>
-                            <i class="fas fa-crown"></i>
-                            Salve Rainha
-                        </h2>
-                        <p>Salve Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve!...</p>
-                        <input type="checkbox" class="checkbox">
-                    </div>
-                `;
-                ultimaPagina.querySelectorAll('.checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        if (this.checked) itensConcluidos++;
-                        else itensConcluidos--;
-                        atualizarProgresso();
-                    });
-                });
-                misteriosElement.appendChild(ultimaPagina);
-                paginas.push(ultimaPagina);
-
-                // Cria a paginação
-                paginas.forEach((_, index) => {
-                    const botao = document.createElement('button');
-                    botao.textContent = index + 1;
-                    botao.addEventListener('click', () => {
-                        mostrarPagina(index);
-                    });
-                    paginacaoElement.appendChild(botao);
-                });
-
-                function mostrarPagina(index) {
-                    paginas.forEach((pagina, i) => {
-                        pagina.classList.toggle('ativa', i === index);
-                    });
-                    // Atualiza o botão ativo na paginação
-                    paginacaoElement.querySelectorAll('button').forEach((botao, i) => {
-                        botao.classList.toggle('ativo', i === index);
-                    });
-                }
-
-                mostrarPagina(0);
-            } else {
-                misteriosElement.innerHTML = `<p>Não há mistérios definidos para ${diaSemana}.</p>`;
+        const mysteriesDB = {
+            gozosos: {
+                name: "Mistérios Gozosos",
+                decades: [
+                    "1º Mistério Gozoso: A Anunciação do Anjo Gabriel à Virgem Maria e a Encarnação do Verbo.",
+                    "2º Mistério Gozoso: A Visitação de Nossa Senhora à sua prima Santa Isabel.",
+                    "3º Mistério Gozoso: O Nascimento do Menino Jesus na gruta de Belém.",
+                    "4º Mistério Gozoso: A Apresentação do Menino Jesus no Templo e a Purificação de Maria.",
+                    "5º Mistério Gozoso: O Encontro do Menino Jesus no Templo entre os Doutores da Lei."
+                ]
+            },
+            dolorosos: {
+                name: "Mistérios Dolorosos",
+                decades: [
+                    "1º Mistério Doloroso: A Agonia de Jesus no Horto das Oliveiras.",
+                    "2º Mistério Doloroso: A Flagelação de Nosso Senhor Jesus Cristo atado à coluna.",
+                    "3º Mistério Doloroso: A Coroação de Espinhos de Nosso Senhor.",
+                    "4º Mistério Doloroso: Jesus carrega a Cruz a caminho do Monte Calvário.",
+                    "5º Mistério Doloroso: A Crucificação e Morte de Nosso Senhor Jesus Cristo."
+                ]
+            },
+            gloriosos: {
+                name: "Mistérios Gloriosos",
+                decades: [
+                    "1º Mistério Glorioso: A Ressurreição de Nosso Senhor Jesus Cristo.",
+                    "2º Mistério Glorioso: A Ascensão admirável de Jesus Cristo ao Céu.",
+                    "3º Mistério Glorioso: A Vinda do Espírito Santo sobre os Apóstolos e Maria Santíssima no Cenáculo.",
+                    "4º Mistério Glorioso: A Assunção de Nossa Senhora ao Céu em corpo e alma.",
+                    "5º Mistério Glorioso: A Coroação de Maria Santíssima como Rainha do Céu e da Terra."
+                ]
+            },
+            luminosos: {
+                name: "Mistérios Luminosos",
+                decades: [
+                    "1º Mistério Luminoso: O Batismo de Jesus no Rio Jordão.",
+                    "2º Mistério Luminoso: O Milagre nas Bodas de Caná (A auto-revelação de Jesus).",
+                    "3º Mistério Luminoso: O Anúncio do Reino de Deus e o convite à conversão.",
+                    "4º Mistério Luminoso: A Transfiguração de Jesus no Monte Tabor.",
+                    "5º Mistério Luminoso: A Instituição da Eucaristia na Última Ceia."
+                ]
             }
-        });
+        };
 
-        function getMisteriosGozosos() {
-            return [
-                { titulo: '1º Mistério Gozoso', descricao: 'A Anunciação do Anjo e a Encarnação do Verbo' },
-                { titulo: '2º Mistério Gozoso', descricao: 'A visitação de Maria a sua prima Santa Isabel' },
-                { titulo: '3º Mistério Gozoso', descricao: 'Nascimento do Menino Jesus' },
-                { titulo: '4º Mistério Gozoso', descricao: 'A apresentação do Menino Jesus no templo' },
-                { titulo: '5º Mistério Gozoso', descricao: 'A perda e o encontro do Menino Jesus no templo' }
-            ];
+        // --- 2. LÓGICA DE DATA E MISTÉRIO ---
+        function getMysteryToday() {
+            const day = new Date().getDay(); 
+            if (day === 0 || day === 3) return mysteriesDB.gloriosos; // Dom, Qua
+            if (day === 1 || day === 6) return mysteriesDB.gozosos;   // Seg, Sab
+            if (day === 2 || day === 5) return mysteriesDB.dolorosos; // Ter, Sex
+            if (day === 4) return mysteriesDB.luminosos; // Qui
+            return mysteriesDB.gozosos; 
+        }
+        
+        function updateDateDisplay() {
+            const today = new Date();
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            const dateString = today.toLocaleDateString('pt-BR', options);
+            document.getElementById('date-display').innerText = dateString;
         }
 
-        function getMisteriosLuminosos() {
-            return [
-                { titulo: '1º Mistério Luminoso', descricao: 'Batismo de Jesus no rio Jordão' },
-                { titulo: '2º Mistério Luminoso', descricao: 'Milagre nas bodas de Caná' },
-                { titulo: '3º Mistério Luminoso', descricao: 'Anúncio do Reino de Deus' },
-                { titulo: '4º Mistério Luminoso', descricao: 'Transfiguração de Jesus' },
-                { titulo: '5º Mistério Luminoso', descricao: 'Instituição da Eucaristia' }
-            ];
+        const todayMystery = getMysteryToday();
+
+        // --- 3. ESTRUTURA DO TERÇO ---
+        let rosaryStructure = [
+            { type: 0, label: "Início: Sinal da Cruz", text: prayers.sinalCruz },
+            { type: 0, label: "Oferecimento do Terço", text: prayers.oferecimento }, 
+            { type: 0, label: "Credo Apostólico", text: prayers.credo }, 
+            { type: 1, label: "Pai Nosso (Pelas intenções do Papa)", text: prayers.paiNosso },
+            { type: 2, label: "Ave Maria (Pelo aumento da Fé)", text: prayers.aveMaria },
+            { type: 2, label: "Ave Maria (Pelo aumento da Esperança)", text: prayers.aveMaria },
+            { type: 2, label: "Ave Maria (Pelo aumento da Caridade)", text: prayers.aveMaria },
+            { type: 1, label: "Glória ao Pai", text: prayers.gloria },
+        ];
+
+        function addDecade(mysteryText, decadeIndex) {
+            rosaryStructure.push({ type: 1, label: `Anúncio do ${decadeIndex + 1}º Mistério e Pai Nosso`, text: `${mysteryText}\n\n${prayers.paiNosso}` });
+            for(let i=1; i<=10; i++) {
+                rosaryStructure.push({ type: 2, label: `${decadeIndex + 1}º Mistério - Ave Maria (${i}/10)`, text: prayers.aveMaria });
+            }
+            rosaryStructure.push({ type: 1, label: `${decadeIndex + 1}º Mistério - Glória e Jaculatória`, text: prayers.gloria });
         }
 
-        function getMisteriosDolorosos() {
-            return [
-                { titulo: '1º Mistério Doloroso', descricao: 'Agonia de Jesus no Horto' },
-                { titulo: '2º Mistério Doloroso', descricao: 'Flagelação de Jesus' },
-                { titulo: '3º Mistério Doloroso', descricao: 'Coroação de espinhos' },
-                { titulo: '4º Mistério Doloroso', descricao: 'Jesus carregando a Cruz' },
-                { titulo: '5º Mistério Doloroso', descricao: 'Crucificação e morte de Jesus' }
+        todayMystery.decades.forEach((mystery, index) => addDecade(mystery, index));
+        rosaryStructure.push({ type: 0, label: "Oração Final: Salve Rainha", text: prayers.salveRainha });
+
+        // --- 4. RENDERIZAÇÃO E CONTROLE ---
+        
+        let currentStep = -1; // Começa antes do primeiro passo
+        const svg = document.getElementById('rosary-svg');
+        const stringPath = document.getElementById('rosary-string');
+        const textContainer = document.querySelector('.prayer-text-container');
+        const beadElements = [];
+
+        function drawRosary() {
+            const centerX = 150;
+            const centerY = 200; 
+            const radius = 120;  
+            const tailStartY = centerY + radius; 
+
+            // 1. Perna inicial
+            const tailCoords = [
+                {x: 150, y: 460}, // Cruz 
+                {x: 150, y: 460}, 
+                {x: 150, y: 460}, 
+                {x: 150, y: 415}, // Pai Nosso Grande
+                {x: 150, y: 390}, // Ave 1
+                {x: 150, y: 370}, // Ave 2
+                {x: 150, y: 350}, // Ave 3
+                {x: 150, y: 320}  // Glória 
             ];
+
+            let pathD = `M 150 460 L 150 ${tailStartY}`; 
+
+            for(let i = 0; i < 8; i++) {
+                createBeadElement(tailCoords[i].x, tailCoords[i].y, i);
+            }
+
+            // 2. Círculo
+            const circleBeadsStart = 8;
+            const finalBeadIndex = rosaryStructure.length - 1;
+            const numberOfBeadsOnCircle = finalBeadIndex - circleBeadsStart;
+
+            const startAngle = 90; 
+            let angleStep = 360 / numberOfBeadsOnCircle;
+
+            pathD += ` M 150 ${tailStartY} A ${radius} ${radius} 0 1 1 149.9 ${tailStartY}`; 
+
+            let circleIndex = 0;
+            for(let i = circleBeadsStart; i < finalBeadIndex; i++) {
+                let angle = (startAngle + (angleStep * circleIndex)) * (Math.PI / 180);
+                let x = centerX - radius * Math.cos(angle); 
+                let y = centerY + radius * Math.sin(angle);
+                createBeadElement(x, y, i);
+                circleIndex++;
+            }
+            
+            // 3. Salve Rainha
+            createBeadElement(150, tailStartY - 20, finalBeadIndex);
+
+            stringPath.setAttribute('d', pathD);
+            
+            updateDateDisplay();
+            // Inicializa sem nenhuma conta ativa
+            document.getElementById('mystery-display').innerText = todayMystery.name;
         }
 
-        function getMisteriosGloriosos() {
-            return [
-                { titulo: '1º Mistério Glorioso', descricao: 'Ressurreição de Jesus' },
-                { titulo: '2º Mistério Glorioso', descricao: 'Ascensão de Jesus' },
-                { titulo: '3º Mistério Glorioso', descricao: 'Descida do Espírito Santo' },
-                { titulo: '4º Mistério Glorioso', descricao: 'Assunção de Maria' },
-                { titulo: '5º Mistério Glorioso', descricao: 'Coroação de Maria no Céu' }
-            ];
+        function createBeadElement(cx, cy, index) {
+            const data = rosaryStructure[index];
+            
+            if(index === 1 || index === 2) {
+                beadElements[index] = beadElements[0]; 
+                return;
+            }
+
+            if (data.type === 0 && index === 0) {
+                // CRUZ
+                const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                group.setAttribute("class", "cross");
+                group.onclick = () => jumpToStep(index);
+                
+                const v = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                v.setAttribute("x", cx - 5); v.setAttribute("y", cy - 25);
+                v.setAttribute("width", 10); v.setAttribute("height", 50);
+                
+                const h = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                h.setAttribute("x", cx - 18); h.setAttribute("y", cy - 12);
+                h.setAttribute("width", 36); h.setAttribute("height", 10);
+                
+                group.appendChild(v); group.appendChild(h);
+                svg.appendChild(group);
+                beadElements[index] = group;
+            } else if (index === rosaryStructure.length - 1) {
+                 // Salve Rainha
+                const el = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                const points = `${cx},${cy+15} ${cx-18},${cy-15} ${cx+18},${cy-15}`;
+                el.setAttribute("points", points);
+                el.setAttribute("class", "bead large");
+                el.onclick = () => jumpToStep(index);
+                svg.appendChild(el);
+                beadElements[index] = el;
+            } else {
+                // BOLINHAS
+                const el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                el.setAttribute("cx", cx); el.setAttribute("cy", cy);
+                el.setAttribute("class", `bead ${data.type === 1 ? 'large' : 'small'}`);
+                el.onclick = () => jumpToStep(index);
+                svg.appendChild(el);
+                beadElements[index] = el;
+            }
         }
+
+        function updateUI() {
+            if(currentStep < 0) return;
+
+            const currentData = rosaryStructure[currentStep];
+            
+            document.getElementById('label-display').innerText = currentData.label;
+            document.getElementById('text-display').innerText = currentData.text;
+
+            textContainer.scrollTop = 0;
+
+            beadElements.forEach((el, index) => {
+                if(!el) return;
+                // Remove a classe active para parar a animação das anteriores
+                el.classList.remove('active'); 
+                
+                if (index === currentStep) {
+                    el.classList.add('active');
+                    // Move a conta ativa para frente no SVG para o brilho não ficar atrás da linha
+                    if(el.parentNode) el.parentNode.appendChild(el);
+                } else if (index < currentStep) {
+                    el.classList.add('done');
+                } else {
+                     el.classList.remove('done');
+                }
+            });
+
+            const btn = document.getElementById('btn-next');
+            if(currentStep === rosaryStructure.length - 1) {
+                btn.innerText = "Finalizar Terço";
+            } else {
+                btn.innerText = "Próxima Oração";
+            }
+        }
+
+        function jumpToStep(index) {
+            currentStep = index;
+            updateUI();
+        }
+
+        function nextBead() {
+            if (currentStep < rosaryStructure.length - 1) {
+                currentStep++;
+                updateUI();
+            } else {
+                if(confirm("Terço finalizado com sucesso! Deseja rezar novamente?")) {
+                    currentStep = -1;
+                    beadElements.forEach(el => { if(el) el.classList.remove('active', 'done'); });
+                     document.getElementById('text-display').innerText = "Clique em Iniciar para começar suas orações.";
+                     document.getElementById('label-display').innerText = "Início";
+                     document.getElementById('btn-next').innerText = "Iniciar Terço";
+                }
+            }
+        }
+
+        // Inicia a aplicação
+        drawRosary();
+
     </script>
 </body>
 </html>
